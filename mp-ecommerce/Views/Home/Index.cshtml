@@ -17,8 +17,11 @@
             <br />
             <br />
             <p>$ @item.Price</p>
-            <input class="btn btn-default" type="button" title="Comprar" value="Comprar" onclick="location.href='@Url.Action("Pay", "Home",item   )'" />
+            <input class="btn btn-default" type="button" title="PayBtn" value="Pagar la compra" onclick="location.href='@Url.Action("Pay", "Home",item   )'" />
 
         </div>
     }
 </div>
+
+
+<script src="https://www.mercadopago.com/v2/security.js" view="home"></script>
