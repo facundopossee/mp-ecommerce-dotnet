@@ -133,11 +133,12 @@ namespace mp_ecommerce.Controllers
         [HttpPost]
         public HttpStatusCodeResult Notifications()
         {
-            string json = JsonConvert.SerializeObject(Request.QueryString);
-
-            //write string to file
-            System.IO.File.WriteAllText(Path.Combine(Server.MapPath("~/Content"), "json"), json);
-
+            if (Request.Params["action"] == "payment.created")
+            {
+                string json = JsonConvert.SerializeObject(Request.QueryString);
+                //write string to file
+                System.IO.File.WriteAllText(Path.Combine(Server.MapPath("~/Content"), "json"), json);
+            }
             return new HttpStatusCodeResult(200);
         }
     }
