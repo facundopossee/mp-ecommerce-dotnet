@@ -6,6 +6,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using Newtonsoft.Json;
+using System.IO;
 
 namespace mp_ecommerce.Controllers
 {
@@ -86,7 +88,7 @@ namespace mp_ecommerce.Controllers
 
             preference.ExternalReference = "facundopossee@gmail.com";
             preference.AutoReturn = MercadoPago.Common.AutoReturnType.approved;
-            //preference.NotificationUrl = Request.Url.GetLeftPart(UriPartial.Authority) + "/Home/Notifications";
+            preference.NotificationUrl = Request.Url.GetLeftPart(UriPartial.Authority) + "/Home/Notifications";
             // Save and posting preference
             preference.Save();
             Response.Redirect(preference.InitPoint);
@@ -125,12 +127,18 @@ namespace mp_ecommerce.Controllers
                 payment_id = Request.Params["payment_id"],
                 preference_id = Request.Params["preference_id"],
                 processing_mode = Request.Params["processing_mode"]
-            };  
+            };
             return View(callBack);
         }
-        public ActionResult Notifications()
+        [HttpPost]
+        public HttpStatusCodeResult Notifications()
         {
-            return View();
+            string json = JsonConvert.SerializeObject(Request.QueryString);
+
+            //write string to file
+            System.IO.File.WriteAllText(Path.Combine(Server.MapPath("~/Content"), "json"), json);
+
+            return new HttpStatusCodeResult(200);
         }
     }
 }
