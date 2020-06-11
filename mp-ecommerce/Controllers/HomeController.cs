@@ -17,9 +17,9 @@ namespace mp_ecommerce.Controllers
         {
             List<Product> ObjEmp = new List<Product>()
             {
-                new Product {Id=1234,Name="Samsung S10",Price=45000,Url="https://media-esp-buyviu-com.s3.amazonaws.com/products/354fe6a874d854d3b9f1a01e1c9fcab8_image_1.jpg" },
-                new Product {Id=1234,Name="iPhone 11 pro",Price=42000,Url="https://media-esp-buyviu-com.s3.amazonaws.com/products/e166ba0b9f18e08c078df16032ee4d42_image_1.png" },
-                new Product {Id=1234,Name="Motorola C115",Price=100000,Url="https://liberar-tu-movil.es/img/motorola/15_28_Motorola_C115.jpg" }
+                new Product {Id=1234,Name="Samsung S10", Description="Dispositivo móvil de Tienda e-commerce",Price=45000,Url="https://media-esp-buyviu-com.s3.amazonaws.com/products/354fe6a874d854d3b9f1a01e1c9fcab8_image_1.jpg" },
+                new Product {Id=1234,Name="iPhone 11 pro",Description="Dispositivo móvil de Tienda e-commerce",Price=42000,Url="https://media-esp-buyviu-com.s3.amazonaws.com/products/e166ba0b9f18e08c078df16032ee4d42_image_1.png" },
+                new Product {Id=1234,Name="Motorola C115",Description="Dispositivo móvil de Tienda e-commerce",Price=100000,Url="https://liberar-tu-movil.es/img/motorola/15_28_Motorola_C115.jpg" }
             };
             return View(ObjEmp);
         }
@@ -35,7 +35,7 @@ namespace mp_ecommerce.Controllers
               {
                   Id = item.Id.ToString(),
                   Title = item.Name,
-                  Description = "Dispositivo móvil de Tienda e-commerce",
+                  Description = item.Description,
                   PictureUrl = item.Url,
                   Quantity = 1,
                   CurrencyId = MercadoPago.Common.CurrencyId.ARS,
@@ -52,13 +52,13 @@ namespace mp_ecommerce.Controllers
                 Phone = new Phone()
                 {
                     AreaCode = "11",
-                    Number = "22223333",
+                    Number = "22223333"
                 },
                 Address = new Address()
                 {
-                    ZipCode = "1111",
+                    StreetName = "False",
                     StreetNumber = 123,
-                    StreetName = "False"
+                    ZipCode = "1111"
                 }
             };
 
@@ -135,9 +135,8 @@ namespace mp_ecommerce.Controllers
         {
             if (Request.Params["action"] == "payment.created")
             {
-                string json = JsonConvert.SerializeObject(Request.QueryString);
                 //write string to file
-                System.IO.File.WriteAllText(Path.Combine(Server.MapPath("~/Content"), "json"), json);
+                System.IO.File.WriteAllText(Path.Combine(Server.MapPath("~/Content"), "json.txt"), Request.InputStream.ToString());
             }
             return new HttpStatusCodeResult(200);
         }
